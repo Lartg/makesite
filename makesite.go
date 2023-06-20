@@ -5,7 +5,21 @@ import (
 	"html/template"
 	"io/ioutil"
 	"os"
+	// swearfilter "github.com/JoshuaDoes/gofuckyourself"
 )
+
+/*
+Use the Go swearfilter module
+
+1. Import swearfilter by uncommenting.
+
+2. declare swears in a flag and save as list of strings in {}
+
+3. use our current content var as message to be filtered
+
+4. filter message and return html as normal
+
+*/
 
 type Content struct {
 	Header    string
@@ -40,6 +54,7 @@ func main() {
 		panic("failed to read template")
 	}
 
+	// computer understand file
 	template, err := template.New("template.tmpl").Parse(string(templateFile))
 	if err != nil {
 		panic("failed to parse template")
@@ -58,5 +73,4 @@ func main() {
 
 	// close file done using
 	HTMLfile.Close()
-
 }
