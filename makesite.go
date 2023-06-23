@@ -5,28 +5,21 @@ import (
 	"html/template"
 	"io/ioutil"
 	"os"
+
+	"github.com/bregydoc/gtranslate"
 )
 
 /*
 If I cannot get this to work then use these:
-"github.com/bregydoc/gtranslate"
+
  "github.com/fatih/color"
- translatedContent, err := gtranslate.TranslateWithParams(
-  postContent,
-  gtranslate.TranslationParams{
-   From: "en",
-   To:   "es",
-  },
- )
- if err != nil {
-  panic(err)
- }
+
 
 */
 
 type Content struct {
-	Header    string
-	Paragraph string
+	ParagraphEN string
+	ParagraphJA string
 }
 
 func main() {
@@ -46,10 +39,21 @@ func main() {
 		panic("Error reading file should be a text file")
 	}
 
+	// translate text to Japanese
+	translatedContent, err := gtranslate.TranslateWithParams(
+		string(text),
+		gtranslate.TranslationParams{
+			From: "en",
+			To:   "ja",
+		},
+	)
+	if err != nil {
+		panic(err)
+	}
 	// create the data structure for the template
 	content := Content{
-		Header:    "Template Header",
-		Paragraph: string(text),
+		ParagraphEN: string(text),
+		ParagraphJA: translatedContent,
 	}
 
 	// read the template file
